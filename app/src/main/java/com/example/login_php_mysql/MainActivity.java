@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     EditText mEmail, mPass;
     Button mLogin;
+    TextView mTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +36,27 @@ public class MainActivity extends AppCompatActivity {
         mEmail = findViewById(R.id.email);
         mPass = findViewById(R.id.pass);
         mLogin = findViewById(R.id.btnLogin);
+        mTextView = findViewById(R.id.textView);
 
         mLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                validarUsuario();
+                String emailVal = mEmail.getText().toString();
+                String passVal = mEmail.getText().toString();
+
+                if(emailVal.isEmpty() && passVal.isEmpty()){
+                    Toast.makeText(MainActivity.this, "Campos vacios", Toast.LENGTH_LONG).show();
+                }else{
+                    validarUsuario();
+                }
+            }
+        });
+
+        mTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, RegistrarActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -52,8 +70,9 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), PrincipalActivity.class);
                     startActivity(intent);
                 }
+
                 else{
-                    Toast.makeText(MainActivity.this, "Usuario o contraseña incorrectos", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "Usuario o contraseña incorrectos_2", Toast.LENGTH_LONG).show();
                 }
             }
         }, new Response.ErrorListener() {
